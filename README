@@ -17,7 +17,7 @@ Requirements
 
 Usage
 ===============================================================================
-visbinary.py [-h] [-p] [-c COLOUMNS] [-o] filename
+visbinary.py [-h] [-p] [-c COLUMNS] [-o] filename
 
 positional arguments:
   filename              path to the file you want to visualize
@@ -25,7 +25,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -p, --print           print out the bytes as hex
-  -c COLUMNS, --coloumns COLUMNS
+  -c COLUMNS, --columns COLUMNS
                         number of bytes (columns) per row (default 32)
   -o, --offset          print out the file offset (in hex) at the beginning of
                         each line
