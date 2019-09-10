@@ -24,7 +24,7 @@ def hex_pad(hexstr, n):
     return "0x" + hexstr[2:].zfill(n)
 
 
-def visualize(f, colors256, print_b, coloumns, print_off):
+def visualize(f, colors256, print_b, columns, print_off):
     b = f.read(1)
     count = 0
     while b:
@@ -64,7 +64,7 @@ def visualize(f, colors256, print_b, coloumns, print_off):
             print(" ", end='')
 
         # Begin new line and reset to default colors
-        if count == coloumns:
+        if count == columns:
             print("\033[0m")
             count = 0
 
@@ -78,14 +78,14 @@ def visbinary():
     # TODO Fix 256 colors mode
     # parser.add_argument("--colors256", "-c", help="enable 256 color mode (requires a compatible terminal)", action="store_true")
     parser.add_argument("-p", "--print", help="print out the bytes as hex", action="store_true")
-    parser.add_argument("-c", "--coloumns", type=int, default=32, help="number of bytes (coloumns) per row (default 32)")
+    parser.add_argument("-c", "--columns", type=int, default=32, help="number of bytes (columns) per row (default 32)")
     parser.add_argument("-o", "--offset", help="print out the file offset (in hex) at the beginning of each line", action="store_true")
     parser.add_argument("filename", help="path to the file you want to visualize")
     args = parser.parse_args()
 
     with open(args.filename, "rb") as f:
         print("File '" + args.filename + "':")
-        visualize(f, False, args.print, args.coloumns, args.offset)
+        visualize(f, False, args.print, args.columns, args.offset)
         f.close()
 
 

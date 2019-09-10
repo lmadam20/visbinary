@@ -25,8 +25,8 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -p, --print           print out the bytes as hex
-  -c COLOUMNS, --coloumns COLOUMNS
-                        number of bytes (coloumns) per row (default 32)
+  -c COLUMNS, --coloumns COLUMNS
+                        number of bytes (columns) per row (default 32)
   -o, --offset          print out the file offset (in hex) at the beginning of
                         each line
 
