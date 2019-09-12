@@ -7,8 +7,14 @@ The colors are chosen by the type of the byte read:
 - red for 'high' bytes (0x7f to 0xfe)
 - white for 0xff
 
-You can visualize any file you want (granted you have access to it),
-though currently only one file at a time.
+By default, colors are *not* printed in 256-color mode, you can however enable
+it by using the '-a' (or '--additional-colors') parameter. This will display
+above colors in more shades with respect to the value of the byte read
+(darker means lower byte value and vice versa).
+Notice that this requires a compatible terminal!
+
+You can visualize any file you want (granted that you have access to it),
+though currently only one at a time.
 
 Requirements
 ===============================================================================
@@ -17,13 +23,15 @@ Requirements
 
 Usage
 ===============================================================================
-visbinary.py [-h] [-p] [-c COLUMNS] [-o] filename
+visbinary.py [-h] [-a] [-p] [-c COLUMNS] [-o] filename
 
 positional arguments:
   filename              path to the file you want to visualize
 
 optional arguments:
   -h, --help            show this help message and exit
+  -a, --additional-colors
+                        enable 256 color mode (requires a compatible terminal)
   -p, --print           print out the bytes as hex
   -c COLUMNS, --columns COLUMNS
                         number of bytes (columns) per row (default 32)
