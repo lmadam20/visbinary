@@ -18,6 +18,35 @@
 
 from argparse import ArgumentParser
 
+# 256-color mode table
+# Each tuple is in the form (<byte range>, <color code>)
+color_table_256 = [
+        # 0x00 bytes, black
+        (range(0x00, 0x01), 0),
+        # low bytes, green
+        (range(0x01, 0x08), 22),
+        (range(0x08, 0x0e), 28),
+        (range(0x0e, 0x13), 34),
+        (range(0x13, 0x18), 40),
+        (range(0x18, 0x20), 46),
+        # ascii bytes, blue
+        (range(ord(' '), ord('0')), 17),
+        (range(ord('0'), ord('9') + 1), 21),
+        (range(ord(':'), ord('@') + 1), 26),
+        (range(ord('A'), ord('Z') + 1), 33),
+        (range(ord('['), ord('`') + 1), 39),
+        (range(ord('a'), ord('z') + 1), 45),
+        (range(ord('{'), ord('~') + 1), 159),
+        # high bytes, red
+        (range(0x7f, 0x95), 52),
+        (range(0x95, 0xb0), 88),
+        (range(0xb0, 0xc9), 124),
+        (range(0xc9, 0xe0), 160),
+        (range(0xe0, 0xff), 196),
+        # 0xff bytes, white
+        (range(0xff, 0x100), 255)
+        ]
+
 
 # Pad 'hexstr' with n leading zeroes
 def hex_pad(hexstr, n):
@@ -38,50 +67,9 @@ def visualize(f, colors256, print_b, columns, print_off):
         print("\033[", end='')
         if colors256:
             print("48;5;", end='')
-            # TODO Make this code more readable
-            # 0x00 byte, black
-            if i == 0x00:
-                print("0", end='')
-            # low bytes
-            elif i in range(0x01, 0x08):
-                print("22", end='')
-            elif i in range(0x08, 0x0e):
-                print("28", end='')
-            elif i in range(0x0e, 0x13):
-                print("34", end='')
-            elif i in range(0x13, 0x18):
-                print("40", end='')
-            elif i in range(0x18, 0x20):
-                print("46", end='')
-            # ascii bytes, blue
-            elif i in range(ord(' '), ord('/') + 1):
-                print("17", end='')
-            elif i in range(ord('0'), ord('9') + 1):
-                print("21", end='')
-            elif i in range(ord(':'), ord('@') + 1):
-                print("26", end='')
-            elif i in range(ord('A'), ord('Z') + 1):
-                print("33", end='')
-            elif i in range(ord('['), ord('`') + 1):
-                print("39", end='')
-            elif i in range(ord('a'), ord('z') + 1):
-                print("45", end='')
-            elif i in range(ord('{'), ord('~') + 1):
-                print("159", end='')
-            # high bytes, red
-            elif i in range(0x7f, 0x95):
-                print("52", end='')
-            elif i in range(0x95, 0xb0):
-                print("88", end='')
-            elif i in range(0xb0, 0xc9):
-                print("124", end='')
-            elif i in range(0xc9, 0xe0):
-                print("160", end='')
-            elif i in range(0xe0, 0xff):
-                print("196", end='')
-            # 0xff byte, white
-            else:
-                print("255", end='')
+            for c in color_table_256:
+                if i in c[0]:
+                    print(str(c[1]), end='')
         else:
             # 0x00 byte, black
             if i == 0:
