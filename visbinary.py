@@ -47,6 +47,20 @@ color_table_256 = [
         (range(0xff, 0x100), 255)
         ]
 
+# Standard color mode table
+color_table = [
+        # 0x00 bytes, black
+        (range(0x00, 0x01), 40),
+        # low bytes, green
+        (range(0x01, ord(' ')), 42),
+        # ascii bytes, blue
+        (range(ord(' '), ord('~') + 1), 44),
+        # high bytes, red
+        (range(ord('~') + 1, 0xff), 41),
+        # 0xff bytes, white
+        (range(0xff, 0x100), 47)
+        ]
+
 
 # Pad 'hexstr' with n leading zeroes
 def hex_pad(hexstr, n):
@@ -61,32 +75,23 @@ def visualize(f, colors256, print_b, columns, print_off):
         if print_off and count == 0:
             print(hex_pad(hex(f.tell() - 1), 8) + "  |", end='')
 
+
         count += 1
         i = ord(b)
 
         print("\033[", end='')
         if colors256:
+            table = color_table_256
             print("48;5;", end='')
-            for c in color_table_256:
-                if i in c[0]:
-                    print(str(c[1]), end='')
         else:
-            # 0x00 byte, black
-            if i == 0:
-                print("40", end='')
-            # low bytes, green
-            elif i in range(1, ord(' ')):
-                print("42", end='')
-            # ascii bytes, blue
-            elif i in range(ord(' '), ord('~') + 1):
-                print("44", end='')
-            # high bytes, red
-            elif i in range(ord('~') + 1, 255):
-                print("41", end='')
-            # 0xff bytes, white
-            elif i == 255:
-                print("47", end='')
+            table = color_table
+
+        # Find the appropriate tuple in the table selected
+        for c in table:
+            if i in c[0]:
+                print(str(c[1]), end='')
         print("m", end='')
+
 
         if print_b:
             print(b.hex(), end='')
