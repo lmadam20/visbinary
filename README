@@ -17,12 +17,12 @@ You can visualize any file you want (granted that you have access to it),
 though currently only one at a time.
 
 Requirements
-===============================================================================
-* A color-compatible terminal (emulator)
-* Python 3
+-------------------------------------------------------------------------------
+- A color-compatible terminal (emulator)
+- Python 3
 
 Usage
-===============================================================================
+-------------------------------------------------------------------------------
 visbinary.py [-h] [-a] [-p] [-c COLUMNS] [-o] filename
 
 positional arguments:
@@ -39,7 +39,7 @@ optional arguments:
                         each line
 
 Licensing
-===============================================================================
+-------------------------------------------------------------------------------
 visbinary.py - Visualize a binary as colors.
 Copyright (c) 2019 Leon Maurice Adam.
 
