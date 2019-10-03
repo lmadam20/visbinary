@@ -110,7 +110,6 @@ def visualize(f, colors256, print_b, columns, print_off):
 
 def visbinary():
     parser = ArgumentParser(description="Visualize a binary as colors by byte type.")
-    # TODO Fix 256 colors mode
     parser.add_argument("-a", "--additional-colors", help="enable 256 color mode (requires a compatible terminal)", action="store_true")
     parser.add_argument("-p", "--print", help="print out the bytes as hex", action="store_true")
     parser.add_argument("-c", "--columns", type=int, default=32, help="number of bytes (columns) per row (default 32)")
