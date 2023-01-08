@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 # visbinary.py - Visualize a binary as colors.
-# Copyright (c) 2019 Leon Maurice Adam.
+# Copyright (c) 2019, 2023 Leon Maurice Adam.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ def hex_pad(hexstr, n):
     return "0x" + hexstr[2:].zfill(n)
 
 
-def visualize(f, colors256, print_b, columns, print_off):
+def visualize(f, colors256, print_b, columns, print_off, print_strings):
     b = f.read(1)
     count = 0
     while b:
@@ -93,8 +93,11 @@ def visualize(f, colors256, print_b, columns, print_off):
         print("m", end='')
 
 
-        if print_b:
-            print(b.hex(), end='')
+        if print_b or print_strings:
+            if print_strings is False or i not in range(ord(' '), ord('~') + 1):
+                print(b.hex(), end='')
+            else:
+                print(" " + b.decode("ascii"), end='')
         else:
             print(" ", end='')
 
@@ -114,12 +117,13 @@ def visbinary():
     parser.add_argument("-p", "--print", help="print out the bytes as hex", action="store_true")
     parser.add_argument("-c", "--columns", type=int, default=32, help="number of bytes (columns) per row (default 32)")
     parser.add_argument("-o", "--offset", help="print out the file offset (in hex) at the beginning of each line", action="store_true")
+    parser.add_argument("-s", "--print-strings", action="store_true", help="Print ASCII bytes as readable characters")
     parser.add_argument("filename", help="path to the file you want to visualize")
     args = parser.parse_args()
 
     with open(args.filename, "rb") as f:
         print("File '" + args.filename + "':")
-        visualize(f, args.additional_colors, args.print, args.columns, args.offset)
+        visualize(f, args.additional_colors, args.print, args.columns, args.offset, args.print_strings)
         f.close()
 
 
